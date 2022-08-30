@@ -23,20 +23,52 @@
   function ProductES5 (name, price) {
     this.name = name;
     this.price = price;
+    this.priceChanged = false;
   }
 
 ProductES5.prototype.make25Discount = function () {
-  this.price *= 0.75;
+  if (this.priceChanged) {
+      console.warn('the price is already discounted')
+      return this.price;
+    }
+    this.price *= 0.75;
+    this.priceChanged = true;
+    console.log('price was changed')
+    return this.price;
 };
+
+class ProductES6 {
+  constructor(name, price) {
+    this.name = name;
+    this.price = price;
+    this.priceChanged = false;
+  }
+
+  make25Discount() {
+    if (this.priceChanged) {
+      console.warn('the price is already discounted')
+      return this.price;
+    }
+    this.price *= 0.75;
+    this.priceChanged = true;
+    console.log('price was changed')
+    return this.price;
+  }
+}
 
 const product1 = new ProductES5('Guitar', 15_000);
 const product2 = new ProductES5('Piano', 85_000);
+const product3 = new ProductES6('Clarnet', 25_000);
+const product4 = new ProductES6('Violin', 20_000);
 
 console.log(product1);
 console.log(product2);
+console.log(product3);
+console.log(product4);
 
-
-
+console(product1.price); // 15000
+console(product1.make25Discount());
+console(product1.price); // 11250
 </script>
 </body>
 </html>

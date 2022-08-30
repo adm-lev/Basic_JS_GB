@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+<script>
+  "use strict";
+
+  // Даты обычно храним как объект, с ним удобно работать.
+  // Создать дату просто:
+  let date = new Date();
+  console.log(date); // текущая дата и время.
+  // Если записать просто let date = Date(), то вы получите строку, со строкой
+  // работать не очень удобно, например тяжело получить день недели.
+
+  // Можно создать определенную дату с помощью конструктора:
+  const date1 = new Date('December 17, 1995 03:24:00');
+  const date2 = new Date('1995-12-17T03:24:00');
+  // Год, месяц, день, часы, минуты, секунды, миллисекунды
+  const date3 = new Date(1995, 11, 17, 3, 24, 0, 0);
+  // Указываем timestamp
+  const date4 = new Date(819159840000);
+
+  // Все три даты дадут один и тот же результат.
+  console.log(date1);
+  // Однако, они будут не равны друг другу, так как это объекты
+  console.log(date1 === date2); // false
+
+  console.log('---');
+
+  // Подробнее про даты можно почитать здесь:
+  // https://developer.mozilla.org/ru/docs/Web/JavaScript/Reference/Global_Objects/Date
+  // У дат много разных методов, можно получить год, день, минуты и так далее.
+  console.log('Год: ', date.getFullYear());
+  console.log('Месяц (начиная с нуля): ', date.getMonth());
+  console.log('День в месяце: ', date.getDate());
+  console.log('День недели числом (начиная с нуля): ', date.getDay());
+  console.log('Минуты: ',date.getMinutes());
+  console.log('Секунды: ',date.getSeconds());
+
+  console.log('---');
+
+  console.log(
+    'Вывести время, как принято в вашей локали (локаль из браузера берется)',
+    date.toLocaleTimeString()
+  );
+  console.log(
+    'Можно указать локаль, например английский вариант:',
+    date.toLocaleTimeString('en')
+  );
+  console.log('Вывод даты в вашей локали:', date.toLocaleDateString());
+  console.log(
+    'Вывод даты в вашей английском варианте:',
+    date.toLocaleDateString('en')
+  );
+
+  console.log('---');
+
+  // Для парсинга используется строковое представление даты из RFC2822:
+  // https://datatracker.ietf.org/doc/html/rfc2822#page-14
+  // Можно использовать и другие варианты, js пытается распознать то что вы
+  // передали, но могут быть неожиданные результаты, учтите это.
+  // В результате получим количество миллисекунд, которое прошло с 1970 года,
+  // по UTC. Это, так называемый timestamp (таймштамп).
+  console.log(Date.parse("Wed Dec 01 2021 12:53:19 GMT+0300")); // 1638352399000
+  // Можно создать дату по timestamp:
+  console.log(new Date(1638352399000));
+
+  console.log('---');
+
+  // Дату можно менять:
+  console.log('Оригинальная дата: ', date);
+  date.setHours(3);
+  date.setMinutes(0);
+  date.setSeconds(0);
+  console.log('Поставили текущую дату в 3 часа ночи: ', date);
+
+  console.log('---');
+
+  // Чтобы прибавить к дате время, используется timestamp, мы получаем текущий
+  // и от текущего timestamp выполняем изменение времени, после чего содаем
+  // новую дату.
+  date = new Date();
+  console.log('Оригинальная дата: ', date);
+
+  const currentTimestamp = date.getTime();
+  console.log('Текущий timestamp: ', currentTimestamp);
+  // Прибавляем сутки, 24 часа * 60 минут * 60 секунд * 1000 миллисекунд.
+  const newTimestamp = currentTimestamp + 24 * 60 * 60 * 1000;
+  console.log('Новый timestamp: ', newTimestamp);
+  console.log('Плюс сутки: ', new Date(newTimestamp));
+
+  // Обычно даты стараемся не менять, если нужна новая дата, то просто
+  // генерируем новую.
+</script>
+</body>
+</html>

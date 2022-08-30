@@ -50,7 +50,99 @@
 <script>
   "use strict";
 
-  // Здесь пишем решение, данный комментарий необходимо стереть.
+  function PostES5 (author, text) {
+    this.now = new Date();
+    this.author = author;
+    this.text = text;
+    this.updateTime = this.getTime(); 
+  }
+
+  PostES5.prototype.getTime = function () {
+    const timeStamp = this.now.toLocaleDateString() + '-' +
+    this.now.toLocaleTimeString();    
+    return timeStamp;
+  }
+
+  PostES5.prototype.edit = function (newText) {
+    this.text = newText;
+    this.updateTime = this.getTime();
+  }
+
+  function AttachedPostES5 (author, text) {
+    PostES5.call(this, author, text);
+    this.highlighted = false;
+  }
+
+  AttachedPostES5.prototype = Object.create(PostES5.prototype);
+  AttachedPostES5.prototype.constructor = AttachedPostES5;
+
+  AttachedPostES5.prototype.makeTextHighlighted = function () {
+    this.highlighted = true;
+    this.updateTime = this.getTime();
+  }
+
+  class PostES6 {
+    constructor(author, text) {
+      this.now = new Date();
+      this.author = author;
+      this.text = text;
+      this.updateTime = this.getTime(); 
+    }
+
+    getTime () {
+    const timeStamp = this.now.toLocaleDateString() + '-' +
+    this.now.toLocaleTimeString();    
+    return timeStamp;
+    }
+
+    edit (newText) {
+    this.text = newText;
+    this.updateTime = this.getTime();
+    }    
+  }
+
+  class AttachedPostES6 extends PostES6 {
+    constructor(author, text) {
+      super(author, text);
+      this.highlighted = false;
+    }
+
+    makeTextHighlighted () {
+    this.highlighted = true;
+    this.updateTime = this.getTime();
+    }
+  }
+
+
+  const post1 = new PostES5('Animals', 'There is a house way down in  \
+  New Orleans. They call the Rising Sun');
+  
+  console.log(post1.text);
+  post1.edit("And it's been the ruin of many a poor boy");
+  console.log(post1.text);
+  console.log(post1.updateTime);
+
+  const post2 = new AttachedPostES5('Kreator', 'Violence revolution');
+  post2.makeTextHighlighted();
+  post2.edit("It's a violence revolution!");
+  console.log(post2.text);
+  console.log(post2.highlighted);
+  console.log(post2.updateTime);
+
+  const post3 = new PostES6('Nazareth', 'Not faking it!');  
+  post3.edit("I am just a child in the Sun");
+  console.log(post3.text);  
+  console.log(post3.updateTime);
+
+  const post4 = new AttachedPostES5('Скорая помощь', 'Голоса, голоса \
+   в темноте и не до сна');
+   console.log(post4.text);
+  post4.makeTextHighlighted();
+  post4.edit("Как назло не слышу слов и устал считать до ста");
+  console.log(post4.text);
+  console.log(post4.highlighted);
+  console.log(post4.updateTime);
+
 </script>
 </body>
 </html>
