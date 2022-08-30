@@ -42,8 +42,7 @@
       };
       if (Number.isInteger(number) && number >= 0 && number <= 999 ){
           let temp = number;
-          for (const order in numbers){
-              
+          for (const order in numbers){              
               numbers[order] = temp % 10;
               temp = Math.floor(temp / 10);
           }
