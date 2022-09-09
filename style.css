@@ -712,21 +712,21 @@ body {
 
 .basket-contains {
     position: absolute;
-    background-color: wheat;
+    background-color:cornsilk;
     width: 500px;
     right: 20px;
-    
-    
+    z-index: 3;    
 }
 
 .basket-contains ul {
     list-style: none;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-around;    
+    border-bottom: solid 1px #9f9f9f;    
 }
 
-.hidden {
-    display: none;
+.hidden {   
+    visibility: hidden;
 }
 
 .goods-list li {
@@ -738,5 +738,5 @@ body {
 
 .summ {
     text-align:right;
-    padding: 10px;
+    padding: 15px;
 }

@@ -29,7 +29,7 @@ filterSizeWrap.addEventListener('click', function() {
     filterSizes.classList.toggle('hidden');
 });
 // ====================================================================//
-
+// переключение видимости корзины
 document.querySelector('.cartIconWrap').addEventListener('click', e => {
     document.querySelector('.basket-contains').classList.toggle('hidden');
 })
@@ -41,7 +41,11 @@ document.querySelector('.featuredItems').addEventListener('click', e => {
        const id = cartEl.dataset.id;
        const name = cartEl.dataset.name;
        const price = cartEl.dataset.price;
-
+       const divEl = document.querySelector('.basket-elements');
+       const totalEl = document.querySelector('.total-count');
+       let summ = 0;
+       let totalCount = 0;
+        // объект заполняется значениями из выбранных элементов
        if (!basketFilled[id]) {
             basketFilled[id] = {
                 id,
@@ -51,14 +55,16 @@ document.querySelector('.featuredItems').addEventListener('click', e => {
             };
        } else {
         basketFilled[id].count++;
-       }
-
+       }       
        
-       const liEl = document.createElement('li');
-       const divEl = document.querySelector('.basket-elements');
-       while (divEl.firstChild) {
+       
+    //    удалить старые списки перед обновлением
+        while (divEl.firstChild) {
         divEl.removeChild(divEl.firstChild);
     }
+
+        
+        // из содержимого объекта создаются элементы списков.
        for (const i in basketFilled) {
             
             const ulEl = document.createElement('ul');
@@ -69,44 +75,21 @@ document.querySelector('.featuredItems').addEventListener('click', e => {
             ulEl.insertAdjacentHTML('beforeEnd', 
                     `<li>${basketFilled[i].count}</li>`);
             ulEl.insertAdjacentHTML('beforeEnd', 
-                    `<li>${basketFilled[i].price}</li>`);
+                    `<li>$${basketFilled[i].price}</li>`);
             ulEl.insertAdjacentHTML('beforeEnd', 
-                    `<li>${basketFilled[i].count * basketFilled[i].price}</li>`
+                    `<li>$${basketFilled[i].count * basketFilled[i].price}</li>`
             );
-            
+            summ += basketFilled[i].count * basketFilled[i].price;
+            totalCount += basketFilled[i].count;
             divEl.insertAdjacentElement('afterBegin', ulEl)
        }
-    //
+       document.querySelector('.summ').textContent = `Общая стоимость: $${summ}`;
+       if (totalCount) {
+        totalEl.textContent = totalCount;
+        totalEl.classList.remove('hidden');
+       }    
     });
 
-    
-
-// class AdedItem {
-//     constructor(id, name, price) {
-//         this.id = id;
-//         this.name = name;
-//         this.price = price;
-//         this.count = 0;
-//     }
-
-//     getCount () {
-//         return this.count;
-//     }
-
-//     getInfo () {
-//         return {
-//             id: this.id,
-//             name: this.name,
-//             price: this.price
-//         };
-//     }
-
-//     incCount () {
-//         this.count++;
-//     }
-// }
-
-// console.log(price);
 
 
 
